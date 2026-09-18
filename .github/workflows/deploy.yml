@@ -22,11 +22,34 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
-      # wrangler.jsonc carries a build hook (npm ci && npm run build),
-      # so wrangler produces the static export itself before uploading out/.
-      - uses: cloudflare/wrangler-action@v3
+      # Fail loudly and specifically when the credential is absent, instead of
+      # letting wrangler fail deep in the deploy with a generic auth error.
+      - name: Check deploy credential is configured
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::error title=CLOUDFLARE_API_TOKEN is not set::Add the repository secret under Settings > Secrets and variables > Actions, then re-run this workflow."
+            exit 1
+          fi
+          echo "Cloudflare credential is present."
+
+      # wrangler.jsonc carries a build hook (npm ci && npm run build), so
+      # wrangler produces the static export itself before uploading out/.
+      # v4+ is required: assets-only Workers (no `main` entry point) are
+      # unsupported by the action's default wrangler 3.90.
+      - id: deploy
+        uses: cloudflare/wrangler-action@v3
         with:
-          # v4+ is required: assets-only Workers (no `main` entry point)
-          # are unsupported by the action's default wrangler 3.90.
           wranglerVersion: "4.134.0"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Report deployed URL
+        if: success()
+        env:
+          URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          {
+            echo "### Deploy succeeded"
+            if [ -n "$URL" ]; then echo "Live at: $URL"; else echo "Worker updated."; fi
+          } >> "$GITHUB_STEP_SUMMARY"
