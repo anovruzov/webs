@@ -1,0 +1,12 @@
+{
+  "name": "webs",
+  "compatibility_date": "2026-09-01",
+  "build": {
+    "command": "npm ci && npm run build"
+  },
+  "assets": {
+    "directory": "out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
