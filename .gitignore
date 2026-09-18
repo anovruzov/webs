@@ -3,3 +3,10 @@ node_modules
 out
 next-env.d.ts
 *.tsbuildinfo
+
+# local secrets — never commit
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
