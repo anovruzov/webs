@@ -278,9 +278,10 @@ export default function Technology() {
                 <div>
                   <dt>Pair routing (research)</dt>
                   <dd>
-                    In the benchmark harness, a query goes to the memory of the participant who said it, then back-fills
-                    from the other side of the conversation. Per-participant routing alone moved recall@10 from 39.4 to
-                    46.8 on LoCoMo’s 282 multi-hop questions.
+                    In the benchmark harness, a query goes to the memory of the participant who said it, then{" "}
+                    <span className="nw">back-fills</span>
+                    from the other side of the conversation. <span className="nw">Per-participant</span> routing alone
+                    moved recall@10 from 39.4 to 46.8 on LoCoMo’s 282 <span className="nw">multi-hop</span> questions.
                   </dd>
                 </div>
               </dl>

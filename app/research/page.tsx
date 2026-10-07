@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Reveal from "@/components/Reveal";
 import MetricView, { keepSeparators } from "@/components/MetricView";
 import { memory, lineage, emergence, type Source } from "@/content/research";
@@ -19,6 +20,20 @@ export const metadata: Metadata = {
   },
 };
 
+/** Let a file path wrap only after a slash, never inside a file name. */
+function breakAfterSlashes(path: string) {
+  const parts = path.split("/");
+  return parts.map((seg, i) =>
+    i < parts.length - 1 ? (
+      <Fragment key={i}>
+        {seg}/<wbr />
+      </Fragment>
+    ) : (
+      <Fragment key={i}>{seg}</Fragment>
+    ),
+  );
+}
+
 function Sources({ items }: { items: Source[] }) {
   return (
     <ul className="sources">
@@ -28,12 +43,12 @@ function Sources({ items }: { items: Source[] }) {
           {s.href ? (
             <a href={s.href} target="_blank" rel="noreferrer" title={s.path}>
               <span className="src-label">{s.label}&nbsp;↗</span>
-              <span className="note src-path">{s.path}</span>
+              <span className="note src-path">{breakAfterSlashes(s.path)}</span>
             </a>
           ) : (
             <>
               <span className="src-label">{s.label}</span>
-              <span className="note src-path">{s.path}</span>
+              <span className="note src-path">{breakAfterSlashes(s.path)}</span>
             </>
           )}
         </li>
@@ -228,7 +243,7 @@ export default function Research() {
             </div>
           </Reveal>
 
-          <div className="metrics" style={{ marginTop: "clamp(48px, 6vw, 80px)" }}>
+          <div className="metrics metrics-4" style={{ marginTop: "clamp(48px, 6vw, 80px)" }}>
             <MetricView m={memory.from} small />
             <MetricView m={memory.recall} small />
             <MetricView m={memory.strict} small />
@@ -257,8 +272,12 @@ export default function Research() {
                   judge tested.
                 </li>
                 <li>
-                  The 744-question slice covers conversations 1–5. A broader reranked run over 1,112 questions scores
-                  68.6%.
+                  The per-question result files list GPT-4o as the judge. That field is hardcoded in the harness; these
+                  runs were graded by gemma-4-e4b.
+                </li>
+                <li>
+                  The 744-question slice covers conversations <span className="nw">1–5</span>. A broader reranked run
+                  over 1,112 questions scores 68.6%.
                 </li>
                 <li>
                   The 0.44&nbsp;s fast path drops the LLM reranker and costs about 6.5 points against the reranked
@@ -296,7 +315,7 @@ export default function Research() {
               <p className="label">Finding</p>
               <p className="finding" style={{ marginTop: "var(--s-3)" }}>
                 Lineage-aware placement keeps more independent support alive. Asking questions raises accuracy far more,
-                and that gain does not depend on lineage-aware placement.
+                and that gain does not depend on <span className="nw">lineage-aware</span> placement.
               </p>
               <p className="body" style={{ marginTop: "var(--s-5)" }}>
                 Two separate effects, measured separately. Placement protects how many independent witnesses survive an
@@ -382,9 +401,9 @@ export default function Research() {
                 Finding
               </p>
               <p className="finding" style={{ marginTop: "var(--s-3)" }}>
-                A combined update (wider targeted questioning, witness-based link timing, and a learned ranker)
-                recovered more of the patterns that hierarchical summaries drop. The study cannot attribute the gain to
-                any one of the three.
+                A combined update (wider targeted questioning, <span className="nw">witness-based</span> link timing,
+                and a learned ranker) recovered more of the patterns that hierarchical summaries drop. The study cannot
+                attribute the gain to any one of the three.
               </p>
             </div>
             <div className="side">

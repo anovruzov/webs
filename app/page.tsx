@@ -17,8 +17,42 @@ const PROBLEMS = [
   },
   {
     t: "Centralizing everything has a price.",
-    b: "Pooling every raw record costs privacy, ownership, and compute, and retrieval alone is not discovery. In our 50,000-agent simulation, perfect retrieval coverage found only 42.4% of hidden patterns. A central long-context system found the most, 78.4%, at 2.6× Mycelic’s modeled compute.",
-    note: "50,000 simulated agents · vNext research report",
+    b: (
+      <>
+        Pooling every raw record costs privacy, ownership, and compute, and retrieval alone is not discovery. In our{" "}
+        <span className="nw">50,000-agent</span> simulation, perfect retrieval coverage found only 42.4% of hidden
+        patterns. A central <span className="nw">long-context</span> system found the most, 78.4%, at 2.6× Mycelic’s
+        modeled compute.
+      </>
+    ),
+    note: "50,000 simulated agents · vNext research\u00a0report",
+  },
+];
+
+const EVIDENCE = [
+  {
+    track: "Memory",
+    n: "01",
+    q: "How does knowledge survive long interactions?",
+    m: memory.headline,
+    note: memory.gain,
+    href: memory.sources[0].href,
+  },
+  {
+    track: "Lineage",
+    n: "02",
+    q: "Does knowing where a claim came from keep it trustworthy?",
+    m: lineage.headline,
+    note: `${lineage.ci}. 10,000\u00a0simulated\u00a0agents.`,
+    href: lineage.sources[0].href,
+  },
+  {
+    track: "Emergence",
+    n: "03",
+    q: "Can partial views add up to a discovery none of them holds?",
+    m: emergence.headline,
+    note: `${keepSeparators(emergence.ci)}.`,
+    href: emergence.sources[0].href,
   },
 ];
 
@@ -174,75 +208,28 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal className="reveal evidence">
-            <article className="ev">
-              <div className="ev-track label">
-                <span>
-                  <span className="idx">Memory</span>
-                </span>
-                <span>Track 01</span>
-              </div>
-              <p className="ev-q">How does knowledge survive long interactions?</p>
-              <MetricView m={memory.headline} />
-              <p className="note">
-                {memory.gain}
-                <br />
-                <a
-                  className="src"
-                  href={memory.sources[0].href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Memory result source (opens in a new tab)"
-                >
-                  Source ↗
-                </a>
-              </p>
-            </article>
-            <article className="ev">
-              <div className="ev-track label">
-                <span>
-                  <span className="idx">Lineage</span>
-                </span>
-                <span>Track 02</span>
-              </div>
-              <p className="ev-q">Does knowing where a claim came from keep it trustworthy?</p>
-              <MetricView m={lineage.headline} />
-              <p className="note">
-                {lineage.ci}. 10,000 simulated agents.
-                <br />
-                <a
-                  className="src"
-                  href={lineage.sources[0].href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Lineage result source (opens in a new tab)"
-                >
-                  Source ↗
-                </a>
-              </p>
-            </article>
-            <article className="ev">
-              <div className="ev-track label">
-                <span>
-                  <span className="idx">Emergence</span>
-                </span>
-                <span>Track 03</span>
-              </div>
-              <p className="ev-q">Can partial views add up to a discovery none of them holds?</p>
-              <MetricView m={emergence.headline} />
-              <p className="note">
-                {keepSeparators(emergence.ci)}.
-                <br />
-                <a
-                  className="src"
-                  href={emergence.sources[0].href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Emergence result source (opens in a new tab)"
-                >
-                  Source ↗
-                </a>
-              </p>
-            </article>
+            {EVIDENCE.map((e) => (
+              <article className="ev" key={e.track}>
+                <div className="ev-track label">
+                  <span className="idx">{e.track}</span>
+                  <span>Track {e.n}</span>
+                </div>
+                <p className="ev-q">{e.q}</p>
+                <MetricView m={e.m} />
+                <p className="note ev-note">{e.note}</p>
+                <p className="note ev-src">
+                  <a
+                    className="src"
+                    href={e.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${e.track} result source (opens in a new tab)`}
+                  >
+                    Source ↗
+                  </a>
+                </p>
+              </article>
+            ))}
           </Reveal>
           <div style={{ marginTop: "var(--s-8)" }}>
             <Link className="btn btn-solid" href="/research">

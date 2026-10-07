@@ -29,14 +29,14 @@ export const memory = {
   headline: {
     value: "73.8%",
     label: "Multi-hop accuracy on LoCoMo",
-    scope: "282 questions · lenient local judge (gemma-4-e4b)",
+    scope: "282 questions · lenient local judge (gemma-4-e4b)",
   },
   gain: "Up from 64.9% with flat retrieval on the same questions. The gain holds under all four judges tested.",
   from: { value: "64.9%", label: "Same questions, flat retrieval", scope: "282 multi-hop questions · same judge" },
   recall: { value: "39.4 → 46.8", label: "Recall@10 from routing alone", scope: "Same 282 questions" },
   strict: {
     value: "+9.6 points",
-    label: "The same gain under a strict judge",
+    label: "Gain under a strict judge",
     scope: "qwen3.6-35b strict · 21.6% → 31.2%",
   },
   slice: [
@@ -59,8 +59,8 @@ export const memory = {
     },
     {
       label: "744-question evaluation",
-      path: "research/results/capstone_full.json",
-      href: blob("research/results/capstone_full.json"),
+      path: "research/reports/REPORT.md",
+      href: blob("research/reports/REPORT.md"),
     },
     {
       label: "Fast-path campaign report",
@@ -83,13 +83,13 @@ export const lineage = {
   headline: {
     value: ".504 → .550",
     label: "Independent support surviving a 50% targeted attack",
-    scope: "Random → lineage-aware placement · 30 paired seeds",
+    scope: "Random → lineage-⁠aware placement · 30 paired seeds",
   },
   ci: "Δ +.046, 95% CI [.046, .047]",
   questioning: {
     value: ".451 → .594",
     label: "Task accuracy with questioning",
-    scope: "Same placement · 8.0 → 14.5 messages per claim",
+    scope: "Same placement · 8.0 → 14.5 messages per claim",
   },
   sources: [
     {
@@ -108,7 +108,7 @@ export const emergence = {
     label: "Hidden patterns found, up from 39.5%",
     scope: "10,000 simulated agents · held-out seeds 5–9",
   },
-  ci: "+17.5 points · 95% CI [+12.5, +21.0] · 5 of 5 seeds improve",
+  ci: "+17.5 points · 95% CI [+12.5, +21.0] · 5 of 5 seeds improve",
   bars10k: [
     { label: "Found rate", before: 39.5, after: 57.0 },
     { label: "Evidence coverage", before: 66.5, after: 93.0 },
@@ -142,7 +142,7 @@ export const emergence = {
   decoy: {
     value: "36.0% → 74.4%",
     label: "Stale-chain decoys accepted",
-    scope: "50,000 simulated agents · a regression, reported as one",
+    scope: "50,000 simulated agents · a regression, reported as one",
   },
   sources: [
     {
