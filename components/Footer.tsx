@@ -21,7 +21,7 @@ export default function Footer() {
             GitHub ↗
           </a>
         </nav>
-        <div className="f-meta note">
+        <div className="f-meta">
           Mycelic Labs
           <br />
           <a href={mailto}>{SITE.email}</a>

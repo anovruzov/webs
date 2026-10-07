@@ -3,10 +3,20 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import HowFigure from "@/components/HowFigure";
 
+const DESCRIPTION =
+  "How Mycelic finds patterns that span an organization while each part of it keeps its own data: local reasoning, lineage, independent support, and targeted questioning.";
+
 export const metadata: Metadata = {
   title: "Technology",
-  description:
-    "How Mycelic finds patterns that span an organization while each part of it keeps its own data: local reasoning, lineage, independent support, and targeted questioning.",
+  description: DESCRIPTION,
+  alternates: { canonical: "/technology" },
+  openGraph: {
+    title: "Technology — Mycelic",
+    description: DESCRIPTION,
+    url: "/technology",
+    siteName: "Mycelic",
+    type: "website",
+  },
 };
 
 const PRINCIPLES = [
@@ -188,7 +198,10 @@ export default function Technology() {
                 an existing witness cannot raise it. That is a bookkeeping guarantee under correct lineage, not a claim
                 that provenance establishes truth.
               </p>
-              <div className="formula">n⊥(c) = max |U| over U ⊆ W(c), such that R(u) ∩ R(v) = ∅ for all u ≠ v</div>
+              <div className="formula">
+                <span className="seg">n⊥(c) = max |U| over U ⊆ W(c),</span>{" "}
+                <span className="seg">such that R(u) ∩ R(v) = ∅ for all u ≠ v</span>
+              </div>
               <p className="body">
                 Requests are ranked by estimated gain per cost. A class-weighted ranker scores candidate chains on 45
                 kernel-side features, including source support, lineage dispersion, lag, and evidence shape. No raw text
@@ -218,7 +231,10 @@ export default function Technology() {
               <dl className="spec">
                 <div>
                   <dt>Lineage</dt>
-                  <dd>A lineage graph with redaction and retraction that propagate to dependent claims.</dd>
+                  <dd>
+                    A lineage graph that redacts what a caller may not read. Retracting an observation withdraws every
+                    claim that depends on it.
+                  </dd>
                 </div>
                 <div>
                   <dt>Aggregation</dt>
@@ -246,23 +262,25 @@ export default function Technology() {
               <h3 className="h3">NeuralGraph</h3>
               <p className="body">
                 Long-horizon memory for each participant, running locally: an MCP server over SQLite with an extraction
-                worker driven by a local model.
+                worker driven by a local model. Retrieval fuses vector, keyword (BM25), and entity-graph channels by
+                rank.
               </p>
             </div>
             <div className="block-body">
               <dl className="spec">
                 <div>
-                  <dt>Tesseract</dt>
+                  <dt>Tesseract (research)</dt>
                   <dd>
-                    The retriever. Four specialized views of memory (temporal, entity, reasoning, adversarial), fused
-                    according to the kind of question asked.
+                    The retriever used in the LoCoMo campaign: four specialized views of memory (temporal, entity,
+                    reasoning, adversarial), fused according to the kind of question asked.
                   </dd>
                 </div>
                 <div>
-                  <dt>Pair routing</dt>
+                  <dt>Pair routing (research)</dt>
                   <dd>
-                    A query goes to the memory of the participant who said it, then back-fills from the other side of
-                    the conversation. Per-participant routing alone moved recall@10 from 39.4 to 46.8 on LoCoMo.
+                    In the benchmark harness, a query goes to the memory of the participant who said it, then back-fills
+                    from the other side of the conversation. Per-participant routing alone moved recall@10 from 39.4 to
+                    46.8 on LoCoMo’s 282 multi-hop questions.
                   </dd>
                 </div>
               </dl>
@@ -275,12 +293,15 @@ export default function Technology() {
             </div>
             <div className="block-body">
               <p className="body body-ink">
-                The runtime and local memory are implemented. The acquisition loop is evaluated in simulation at 10,000
-                and 50,000 agents. Validation with live models on real records is the next milestone.
+                The runtime and local memory are implemented. The acquisition loop is evaluated in simulation, with
+                10,000 and 50,000 simulated agents. Validation with live models on real records is the next milestone.
               </p>
               <div className="btn-row" style={{ marginTop: "var(--s-6)" }}>
                 <Link className="btn btn-solid" href="/research">
-                  Research results <span className="arrow">→</span>
+                  Research results{" "}
+                  <span className="arrow" aria-hidden="true">
+                    →
+                  </span>
                 </Link>
                 <a
                   className="btn btn-line"
@@ -288,7 +309,10 @@ export default function Technology() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Source on GitHub <span className="arrow">↗</span>
+                  Source on GitHub{" "}
+                  <span className="arrow" aria-hidden="true">
+                    ↗
+                  </span>
                 </a>
               </div>
             </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import HeroArt from "@/components/HeroArt";
 import HowFigure from "@/components/HowFigure";
 import Reveal from "@/components/Reveal";
-import MetricView from "@/components/MetricView";
+import MetricView, { keepSeparators } from "@/components/MetricView";
 import { memory, lineage, emergence } from "@/content/research";
 import { mailto } from "@/content/site";
 
@@ -16,9 +16,9 @@ const PROBLEMS = [
     b: "Reports that move up an organization keep what mattered locally and drop what mattered together. The link between three ordinary events is the first thing to go.",
   },
   {
-    t: "Centralizing everything is not the fix.",
-    b: "Pooling every raw record costs privacy, ownership, and compute. And retrieval is not discovery: in our 50,000-agent study, perfect retrieval coverage still found only 42.4% of hidden patterns.",
-    note: "Oracle retrieval, 50,000 simulated agents · NEXT_RESEARCH_REPORT.md",
+    t: "Centralizing everything has a price.",
+    b: "Pooling every raw record costs privacy, ownership, and compute, and retrieval alone is not discovery. In our 50,000-agent simulation, perfect retrieval coverage found only 42.4% of hidden patterns. A central long-context system found the most, 78.4%, at 2.6× Mycelic’s modeled compute.",
+    note: "50,000 simulated agents · vNext research report",
   },
 ];
 
@@ -59,20 +59,22 @@ export default function Home() {
             </p>
             <div className="btn-row">
               <Link className="btn btn-solid" href="/technology">
-                Explore the technology <span className="arrow">→</span>
+                Explore the technology{" "}
+                <span className="arrow" aria-hidden="true">
+                  →
+                </span>
               </Link>
               <Link className="btn btn-line" href="/research">
-                Read the research <span className="arrow">→</span>
+                Read the research{" "}
+                <span className="arrow" aria-hidden="true">
+                  →
+                </span>
               </Link>
             </div>
           </div>
-          <figure className="hero-art">
+          <div className="hero-art">
             <HeroArt />
-            <figcaption className="sr-only">
-              Fig. 01: three local colonies, each growing in its own way, send a few hyphae into one shared ring that
-              none of them forms alone.
-            </figcaption>
-          </figure>
+          </div>
         </div>
       </section>
 
@@ -98,7 +100,7 @@ export default function Home() {
                       rel="noreferrer"
                       style={{ borderBottom: "1px solid var(--line)" }}
                     >
-                      {p.note} ↗
+                      {p.note}&nbsp;↗
                     </a>
                   </p>
                 )}
@@ -135,7 +137,7 @@ export default function Home() {
             </span>
             <h2 className="h2">Where the answer is split across the organization.</h2>
             <p className="body">
-              Three scenarios that show the primitive. Each one is a pattern no single team could confirm alone.
+              Three illustrative scenarios. In each, the answer is a pattern no single team could confirm alone.
             </p>
           </Reveal>
           <ol className="apps">
@@ -148,9 +150,9 @@ export default function Home() {
                 <p className="app-body body">{a.b}</p>
                 <dl className="app-io">
                   <dt>Signals</dt>
-                  <dd className="note">{a.in}</dd>
+                  <dd>{a.in}</dd>
                   <dt>Result</dt>
-                  <dd className="note">{a.out}</dd>
+                  <dd>{a.out}</dd>
                 </dl>
               </Reveal>
             ))}
@@ -182,9 +184,15 @@ export default function Home() {
               <p className="ev-q">How does knowledge survive long interactions?</p>
               <MetricView m={memory.headline} />
               <p className="note">
-                Up from 64.9% with flat retrieval, same questions and judge.
+                {memory.gain}
                 <br />
-                <a className="src" href={memory.sources[0].href} target="_blank" rel="noreferrer">
+                <a
+                  className="src"
+                  href={memory.sources[0].href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Memory result source (opens in a new tab)"
+                >
                   Source ↗
                 </a>
               </p>
@@ -199,9 +207,15 @@ export default function Home() {
               <p className="ev-q">Does knowing where a claim came from keep it trustworthy?</p>
               <MetricView m={lineage.headline} />
               <p className="note">
-                10,000 simulated agents · 30 paired seeds.
+                {lineage.ci}. 10,000 simulated agents.
                 <br />
-                <a className="src" href={lineage.sources[0].href} target="_blank" rel="noreferrer">
+                <a
+                  className="src"
+                  href={lineage.sources[0].href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Lineage result source (opens in a new tab)"
+                >
                   Source ↗
                 </a>
               </p>
@@ -216,9 +230,15 @@ export default function Home() {
               <p className="ev-q">Can partial views add up to a discovery none of them holds?</p>
               <MetricView m={emergence.headline} />
               <p className="note">
-                {emergence.ci}.
+                {keepSeparators(emergence.ci)}.
                 <br />
-                <a className="src" href={emergence.sources[0].href} target="_blank" rel="noreferrer">
+                <a
+                  className="src"
+                  href={emergence.sources[0].href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Emergence result source (opens in a new tab)"
+                >
                   Source ↗
                 </a>
               </p>
@@ -226,7 +246,10 @@ export default function Home() {
           </Reveal>
           <div style={{ marginTop: "var(--s-8)" }}>
             <Link className="btn btn-solid" href="/research">
-              Read the research <span className="arrow">→</span>
+              Read the research{" "}
+              <span className="arrow" aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
@@ -241,7 +264,10 @@ export default function Home() {
           <div className="contact-side">
             <p className="body">Tell us what you are trying to see, and where the pieces live today.</p>
             <a className="btn btn-solid" href={mailto}>
-              Write to us <span className="arrow">→</span>
+              Write to us{" "}
+              <span className="arrow" aria-hidden="true">
+                →
+              </span>
             </a>
           </div>
         </div>

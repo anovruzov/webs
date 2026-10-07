@@ -32,7 +32,7 @@ function Records({ x, y, n = 3, w = 40 }: { x: number; y: number; n?: number; w?
 
 function Local() {
   return (
-    <svg viewBox="0 0 240 192" aria-hidden="true">
+    <svg viewBox="0 0 240 192" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
       <rect className="ink-1 ink-dash" x="8" y="22" width="96" height="66" />
       <Records x={20} y={42} />
       <rect className="fill-ink" x="84" y="34" width="8" height="8" />
@@ -53,7 +53,7 @@ function Local() {
 
 function Shared() {
   return (
-    <svg viewBox="0 0 240 192" aria-hidden="true">
+    <svg viewBox="0 0 240 192" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
       <line className="ink-2 draw" pathLength={1} x1="0" y1="52" x2="240" y2="52" />
       <Tag x={0} y={40} t="shared layer" />
 
@@ -79,7 +79,7 @@ function Lineage() {
     { x: 190, y: 162 },
   ];
   return (
-    <svg viewBox="0 0 240 192" aria-hidden="true">
+    <svg viewBox="0 0 240 192" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
       {roots.map((r, i) => (
         <path
           key={i}
@@ -105,19 +105,19 @@ function Lineage() {
 
 function Discovery() {
   return (
-    <svg viewBox="0 0 240 192" aria-hidden="true">
+    <svg viewBox="0 0 240 192" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
       <g transform="translate(64 40) rotate(45)">
         <rect className="ink-1 fill-paper" x="-7" y="-7" width="14" height="14" />
       </g>
       <Tag x={0} y={16} t="gap in finding" />
-      <path className="ink-1 ink-dash draw" pathLength={1} d="M76,48 C120,64 168,104 178,146" />
+      <path className="ink-1 ink-dash" d="M76,48 C120,64 168,104 178,146" />
       <path className="ink-1" d="M172,140 L178,147 L182,138" />
       <Tag x={150} y={78} t="question" />
       <rect className="ink-1 ink-dash" x="150" y="152" width="58" height="34" />
       <rect className="fill-ink" x="190" y="160" width="8" height="8" />
       <path className="ink-2 draw d3" pathLength={1} d="M160,150 C140,118 104,82 80,58" />
       <path className="ink-2" d="M88,58 L79,57 L81,66" />
-      <Tag x={58} y={130} t="answer" />
+      <Tag x={106} y={116} t="answer" end />
       <path className="ink-mute draw d4" pathLength={1} d="M44,58 C10,90 18,150 70,160 C96,165 118,150 126,132" />
       <path className="ink-mute" d="M120,134 L127,131 L129,139" />
       <Tag x={0} y={184} t="next question" />
@@ -172,7 +172,7 @@ export default function HowFigure() {
         </svg>
       </div>
       <div className="figure-foot">
-        <span className="note">Fig. 02 — The loop. Findings move; records stay.</span>
+        <span className="note">Fig. 02 — The loop. Findings move; records stay.</span>
         <span className="note">04 → 01</span>
       </div>
     </Reveal>

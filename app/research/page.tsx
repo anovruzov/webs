@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
-import MetricView from "@/components/MetricView";
+import MetricView, { keepSeparators } from "@/components/MetricView";
 import { memory, lineage, emergence, type Source } from "@/content/research";
+
+const DESCRIPTION =
+  "Three connected investigations into how an organization can learn as a system: memory, lineage, and emergence. Every figure is sourced and scoped.";
 
 export const metadata: Metadata = {
   title: "Research",
-  description:
-    "Three connected investigations into how an organization can learn as a system: memory, lineage, and emergence. Every figure is sourced and scoped.",
+  description: DESCRIPTION,
+  alternates: { canonical: "/research" },
+  openGraph: {
+    title: "Research — Mycelic",
+    description: DESCRIPTION,
+    url: "/research",
+    siteName: "Mycelic",
+    type: "website",
+  },
 };
 
 function Sources({ items }: { items: Source[] }) {
@@ -14,13 +24,17 @@ function Sources({ items }: { items: Source[] }) {
     <ul className="sources">
       <li className="label">Sources</li>
       {items.map((s) => (
-        <li key={s.label} className="note">
+        <li key={s.label}>
           {s.href ? (
-            <a href={s.href} target="_blank" rel="noreferrer" style={{ borderBottom: "1px solid var(--line)" }}>
-              {s.label} ↗
+            <a href={s.href} target="_blank" rel="noreferrer" title={s.path}>
+              <span className="src-label">{s.label}&nbsp;↗</span>
+              <span className="note src-path">{s.path}</span>
             </a>
           ) : (
-            s.label
+            <>
+              <span className="src-label">{s.label}</span>
+              <span className="note src-path">{s.path}</span>
+            </>
           )}
         </li>
       ))}
@@ -45,7 +59,12 @@ function Bars() {
             <div className="bar-lbl">
               <span>{b.label}</span>
               <span className="nums">
-                {b.before.toFixed(1)} → <b>{b.after.toFixed(1)}</b>
+                <span aria-hidden="true">
+                  {b.before.toFixed(1)} → <b>{b.after.toFixed(1)}</b>
+                </span>
+                <span className="sr-only">
+                  Previous hierarchy {b.before.toFixed(1)}%, current hierarchy {b.after.toFixed(1)}%
+                </span>
               </span>
             </div>
             <div className="bar-pair" aria-hidden="true">
@@ -56,7 +75,7 @@ function Bars() {
         ))}
       </div>
       <figcaption className="note" style={{ marginTop: "var(--s-5)" }}>
-        Fig. 03 — 10,000 agents, held-out seeds 5–9, percent.
+        Fig. 03 — 10,000 simulated agents, held-out seeds 5–9, percent.
       </figcaption>
     </figure>
   );
@@ -90,7 +109,7 @@ function ScatterSvg({ W, anchors, className }: { W: number; anchors: Record<stri
       className={className}
       viewBox={`0 0 ${W} ${H}`}
       role="img"
-      aria-label="Found rate versus modeled compute at 50,000 agents"
+      aria-label="Found rate versus modeled compute at 50,000 simulated agents"
     >
       {[30, 50, 70].map((v) => (
         <g key={v}>
@@ -128,7 +147,7 @@ function Scatter() {
       <ScatterSvg W={560} anchors={WIDE} className="sc-wide" />
       <ScatterSvg W={350} anchors={NARROW} className="sc-narrow" />
       <figcaption className="note" style={{ marginTop: "var(--s-3)" }}>
-        Fig. 04 — Found rate against modeled compute, 50,000 agents.
+        Fig. 04 — Found rate against modeled compute, 50,000 simulated agents.
       </figcaption>
     </figure>
   );
@@ -212,14 +231,15 @@ export default function Research() {
           <div className="metrics" style={{ marginTop: "clamp(48px, 6vw, 80px)" }}>
             <MetricView m={memory.from} small />
             <MetricView m={memory.recall} small />
+            <MetricView m={memory.strict} small />
             <MetricView m={memory.fast} small />
           </div>
 
           <div className="track-body">
             <div className="main">
-              <p className="label" style={{ marginBottom: "var(--s-5)" }}>
-                Shipped stack · 744-question evaluation
-              </p>
+              <h3 className="label" style={{ marginBottom: "var(--s-5)" }}>
+                Benchmark configuration · 744-question evaluation
+              </h3>
               <div className="metrics">
                 {memory.slice.map((m) => (
                   <MetricView key={m.label} m={m} small />
@@ -227,20 +247,27 @@ export default function Research() {
               </div>
             </div>
             <div className="side">
-              <p className="label" style={{ marginBottom: "var(--s-3)" }}>
+              <h3 className="label" style={{ marginBottom: "var(--s-3)" }}>
                 Scope
-              </p>
+              </h3>
               <ul className="limits">
                 <li>
-                  Answering, reranking, and judging run on a small local model (gemma-4-e4b) with a lenient judge.
+                  Answering, reranking, and judging use a small local model (gemma-4-e4b) with a lenient judge prompt. A
+                  strict judge scores the same 282 answers at 31.2%. The gain over flat retrieval holds under every
+                  judge tested.
                 </li>
                 <li>
-                  The 744-question slice covers conversations 1–5. A broader run over conversations 1–8 scores 68.6%.
+                  The 744-question slice covers conversations 1–5. A broader reranked run over 1,112 questions scores
+                  68.6%.
                 </li>
                 <li>
-                  The 0.44 s fast path drops the LLM reranker and costs about 6.5 points against the reranked stack.
+                  The 0.44&nbsp;s fast path drops the LLM reranker and costs about 6.5 points against the reranked
+                  stack.
                 </li>
-                <li>The harness’s single-hop category averages three evidence messages per question.</li>
+                <li>
+                  The benchmark harness labels LoCoMo categories 1 and 4 the other way round. This page uses the
+                  dataset’s own names.
+                </li>
               </ul>
               <Sources items={memory.sources} />
             </div>
@@ -269,7 +296,7 @@ export default function Research() {
               <p className="label">Finding</p>
               <p className="finding" style={{ marginTop: "var(--s-3)" }}>
                 Lineage-aware placement keeps more independent support alive. Asking questions raises accuracy far more,
-                and that gain does not depend on lineage.
+                and that gain does not depend on lineage-aware placement.
               </p>
               <p className="body" style={{ marginTop: "var(--s-5)" }}>
                 Two separate effects, measured separately. Placement protects how many independent witnesses survive an
@@ -301,11 +328,14 @@ export default function Research() {
                 </table>
               </div>
               <p className="note" style={{ marginTop: "var(--s-3)" }}>
-                {lineage.setup}
+                {keepSeparators(lineage.setup)}
               </p>
             </div>
             <div className="side">
               <MetricView m={lineage.headline} />
+              <p className="note" style={{ marginTop: "var(--s-2)" }}>
+                {lineage.ci}
+              </p>
               <div style={{ marginTop: "var(--s-7)" }}>
                 <MetricView m={lineage.questioning} small />
               </div>
@@ -313,6 +343,10 @@ export default function Research() {
                 <li>Pure simulation over symbolic claims. No language models in the loop.</li>
                 <li>Placement alone moves accuracy by only +.010. Raw knowledge survival is unchanged.</li>
                 <li>Questioning on random placement scores higher accuracy (.628) with less independent support.</li>
+                <li>
+                  A re-check returns the true value by construction, so the questioning gain shows what re-verifying a
+                  source is worth, not how hard it is to ask well.
+                </li>
               </ul>
               <Sources items={lineage.sources} />
             </div>
@@ -326,7 +360,7 @@ export default function Research() {
           <div className="track-head">
             <div className="name">
               <p className="label">
-                <span className="idx">03</span> Collective discovery · 10,000–50,000 agents
+                <span className="idx">03</span> Collective discovery · 10,000–50,000 simulated agents
               </p>
               <h2 className="h1">Emergence</h2>
             </div>
@@ -348,14 +382,15 @@ export default function Research() {
                 Finding
               </p>
               <p className="finding" style={{ marginTop: "var(--s-3)" }}>
-                Targeted questioning recovers discoveries that hierarchical summaries throw away. The pattern that was
-                found existed in no single agent’s state.
+                A combined update (wider targeted questioning, witness-based link timing, and a learned ranker)
+                recovered more of the patterns that hierarchical summaries drop. The study cannot attribute the gain to
+                any one of the three.
               </p>
             </div>
             <div className="side">
               <MetricView m={emergence.headline} />
               <p className="note" style={{ marginTop: "var(--s-3)" }}>
-                {emergence.ci}
+                {keepSeparators(emergence.ci)}
               </p>
             </div>
           </Reveal>
@@ -377,9 +412,9 @@ export default function Research() {
 
           <div className="track-body">
             <div className="main">
-              <p className="label" style={{ marginBottom: "var(--s-5)" }}>
-                50,000 agents · five architectures · same worlds
-              </p>
+              <h3 className="label" style={{ marginBottom: "var(--s-5)" }}>
+                50,000 simulated agents · five architectures · same worlds
+              </h3>
               <div className="table-scroll">
                 <table className="dtable">
                   <thead>
@@ -409,19 +444,23 @@ export default function Research() {
               </div>
             </div>
             <div className="side">
-              <p className="label" style={{ marginBottom: "var(--s-5)" }}>
+              <h3 className="label" style={{ marginBottom: "var(--s-5)" }}>
                 Open problems
-              </p>
+              </h3>
               <MetricView m={emergence.decoy} small />
               <ul className="limits" style={{ marginTop: "var(--s-6)" }}>
                 <li>
                   Centralized long context still finds more: 78.4% against 56.6% at 50K, at 2.6× the modeled compute.
                 </li>
                 <li>
-                  The kernel’s global read exceeds the modeled 1M-token tier. A production claim needs it chunked.
+                  The kernel’s global read exceeds the modeled <span className="nw">1M-token</span> tier. A production
+                  claim needs it chunked.
                 </li>
                 <li>Simulator study. Compute is modeled, not measured. Live-model validation is next.</li>
-                <li>The 50K suite reuses development seeds. The 10K held-out panel is the clean result.</li>
+                <li>
+                  The 50K suite reuses development seeds. The 10K <span className="nw">held-out</span> panel is the
+                  clean result.
+                </li>
               </ul>
               <Sources items={emergence.sources} />
             </div>

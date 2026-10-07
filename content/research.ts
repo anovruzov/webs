@@ -2,12 +2,20 @@
  * Every number on the site comes from this file, and every number here was
  * checked against a research artifact. Scope travels with the value; numbers
  * from different scopes are never placed side by side as if comparable.
+ *
+ * Non-breaking spaces ( ) keep statistics such as confidence intervals
+ * on one line.
+ *
+ * LoCoMo naming: the benchmark harness inherited category constants that swap
+ * single-hop and multi-hop. This file uses the dataset's own names: category 1
+ * (n=282, ~3.1 evidence messages per question) is multi-hop; category 4 is
+ * single-hop. See docs/BENCHMARKS.md in NeuralGraph.
  */
 
 const REPO = "https://github.com/anovruzov/NeuralGraph";
 const blob = (path: string, branch = "main") => `${REPO}/blob/${branch}/${path}`;
 
-export type Source = { label: string; href?: string };
+export type Source = { label: string; path: string; href?: string };
 
 export type Metric = {
   value: string;
@@ -18,28 +26,45 @@ export type Metric = {
 export const memory = {
   question:
     "Can a system keep knowledge across long interactions while preserving structure, provenance, and local context?",
-  headline: { value: "73.8%", label: "Single-hop accuracy on LoCoMo", scope: "282 questions · full single-hop set" },
-  from: { value: "64.9%", label: "Same questions, flat retrieval", scope: "LoCoMo · 282 questions · same judge" },
-  recall: { value: "39.4 → 46.8", label: "Recall@10 from routing alone", scope: "Same 282 questions" },
+  headline: {
+    value: "73.8%",
+    label: "Multi-hop accuracy on LoCoMo",
+    scope: "282 questions · lenient local judge (gemma-4-e4b)",
+  },
+  gain: "Up from 64.9% with flat retrieval on the same questions. The gain holds under all four judges tested.",
+  from: { value: "64.9%", label: "Same questions, flat retrieval", scope: "282 multi-hop questions · same judge" },
+  recall: { value: "39.4 → 46.8", label: "Recall@10 from routing alone", scope: "Same 282 questions" },
+  strict: {
+    value: "+9.6 points",
+    label: "The same gain under a strict judge",
+    scope: "qwen3.6-35b strict · 21.6% → 31.2%",
+  },
   slice: [
-    { value: "72.2%", label: "Overall", scope: "744 questions · conversations 1–5" },
-    { value: "72.8%", label: "Multi-hop", scope: "400 questions · same slice" },
-    { value: "73.7%", label: "Temporal", scope: "156 questions · same slice" },
+    { value: "72.2%", label: "Overall", scope: "744 questions · conversations 1–5" },
+    { value: "72.8%", label: "Single-hop", scope: "400 questions · same slice" },
+    { value: "73.7%", label: "Temporal", scope: "156 questions · same slice" },
   ] as Metric[],
-  fast: { value: "0.44 s", label: "End-to-end, without the reranker", scope: "All 1,540 questions · 61.9% accuracy" },
+  fast: { value: "0.44 s", label: "End-to-end, without the reranker", scope: "All 1,540 questions · 61.9% accuracy" },
   sources: [
+    { label: "Benchmark summary", path: "docs/BENCHMARKS.md", href: blob("docs/BENCHMARKS.md") },
     {
-      label: "research/results/local_pairs_single_hop.json",
+      label: "Pair-routing results",
+      path: "research/results/local_pairs_single_hop.json",
       href: blob("research/results/local_pairs_single_hop.json"),
     },
-    { label: "research/results/flat_single_hop.json", href: blob("research/results/flat_single_hop.json") },
     {
-      label: "research/results/capstone_full.json + capstone_rest.json",
+      label: "Flat-retrieval results",
+      path: "research/results/flat_single_hop.json",
+      href: blob("research/results/flat_single_hop.json"),
+    },
+    {
+      label: "744-question evaluation",
+      path: "research/results/capstone_full.json",
       href: blob("research/results/capstone_full.json"),
     },
-    { label: "docs/BENCHMARKS.md", href: blob("docs/BENCHMARKS.md") },
     {
-      label: "Fast path: docs/research/RESULTS_ALL.md (branch research/retrieval-campaign-2026-09)",
+      label: "Fast-path campaign report",
+      path: "docs/research/RESULTS_ALL.md",
       href: blob("docs/research/RESULTS_ALL.md", "research/retrieval-campaign-2026-09"),
     },
   ] as Source[],
@@ -47,8 +72,8 @@ export const memory = {
 
 export const lineage = {
   question:
-    "When knowledge is spread across thousands of agents and half of them are hostile, does knowing where a claim came from keep it trustworthy?",
-  setup: "10,000 simulated agents · 50% white-box lineage attack · 30 paired seeds · 4 replicas per claim",
+    "When knowledge is spread across thousands of agents and an attacker takes out half of them, does knowing where a claim came from keep it trustworthy?",
+  setup: "10,000 simulated agents · 50% targeted attack · 30 paired seeds · 4 replicas per claim",
   rows: [
     { id: "B3", name: "Random placement", acc: ".441", iss: ".504", msgs: "8.0" },
     { id: "B6", name: "Lineage-aware placement", acc: ".451", iss: ".550", msgs: "8.0", hl: true },
@@ -56,18 +81,20 @@ export const lineage = {
     { id: "B3Q", name: "Random, with questioning", acc: ".628", iss: ".507", msgs: "15.7" },
   ],
   headline: {
-    value: "+.046",
-    label: "Independent support that survives a 50% attack",
-    scope: "Lineage-aware vs random · 95% CI [.046, .047]",
+    value: ".504 → .550",
+    label: "Independent support surviving a 50% targeted attack",
+    scope: "Random → lineage-aware placement · 30 paired seeds",
   },
+  ci: "Δ +.046, 95% CI [.046, .047]",
   questioning: {
     value: ".451 → .594",
     label: "Task accuracy with questioning",
-    scope: "Same placement · 8.0 → 14.5 messages per claim",
+    scope: "Same placement · 8.0 → 14.5 messages per claim",
   },
   sources: [
     {
-      label: "experiments/large_scale_agentic_web/RESULTS.md (branch claude/agentic-web-stress-test-2czsv3)",
+      label: "Agentic-web stress test",
+      path: "experiments/large_scale_agentic_web/RESULTS.md",
       href: blob("experiments/large_scale_agentic_web/RESULTS.md", "claude/agentic-web-stress-test-2czsv3"),
     },
   ] as Source[],
@@ -79,9 +106,9 @@ export const emergence = {
   headline: {
     value: "57.0%",
     label: "Hidden patterns found, up from 39.5%",
-    scope: "10,000 agents · held-out seeds 5–9 · 5 of 5 improve",
+    scope: "10,000 simulated agents · held-out seeds 5–9",
   },
-  ci: "+17.5 points · 95% CI [+12.5, +21.0]",
+  ci: "+17.5 points · 95% CI [+12.5, +21.0] · 5 of 5 seeds improve",
   bars10k: [
     { label: "Found rate", before: 39.5, after: 57.0 },
     { label: "Evidence coverage", before: 66.5, after: 93.0 },
@@ -104,18 +131,29 @@ export const emergence = {
   ],
   scale: {
     value: "56.6%",
-    label: "Found at 50,000 agents",
-    scope: "3.86M vs 10.2M modeled compute units for central context",
+    label: "Found at 50,000 simulated agents",
+    scope: "3.86M modeled compute units, against 10.2M for central context",
   },
-  oracle: { value: "42.4%", label: "Found with 100% retrieval coverage", scope: "Oracle retrieval · 50,000 agents" },
+  oracle: {
+    value: "42.4%",
+    label: "Found with 100% retrieval coverage",
+    scope: "Oracle retrieval · 50,000 simulated agents",
+  },
   decoy: {
     value: "36.0% → 74.4%",
     label: "Stale-chain decoys accepted",
-    scope: "50,000 agents · a regression, reported as one",
+    scope: "50,000 simulated agents · a regression, reported as one",
   },
   sources: [
-    { label: "docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md", href: blob("docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md") },
-    { label: "docs/mycelic_vnext/ALL.md", href: blob("docs/mycelic_vnext/ALL.md") },
-    { label: "Preprint: Targeted Evidence Acquisition for Discovery in Hierarchical Agent Memory" },
+    {
+      label: "vNext research report",
+      path: "docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md",
+      href: blob("docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md"),
+    },
+    { label: "vNext full results", path: "docs/mycelic_vnext/ALL.md", href: blob("docs/mycelic_vnext/ALL.md") },
+    {
+      label: "Preprint",
+      path: "Targeted Evidence Acquisition for Discovery in Hierarchical Agent Memory",
+    },
   ] as Source[],
 };

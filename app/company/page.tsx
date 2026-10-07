@@ -2,9 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE, mailto } from "@/content/site";
 
+const DESCRIPTION = "Mycelic builds systems that let organizations learn collectively.";
+
 export const metadata: Metadata = {
   title: "Company",
-  description: "Mycelic builds systems that let organizations learn collectively.",
+  description: DESCRIPTION,
+  alternates: { canonical: "/company" },
+  openGraph: {
+    title: "Company — Mycelic",
+    description: DESCRIPTION,
+    url: "/company",
+    siteName: "Mycelic",
+    type: "website",
+  },
 };
 
 export default function Company() {
@@ -23,7 +33,7 @@ export default function Company() {
         <div className="wrap">
           <div className="block" style={{ borderTop: 0, paddingTop: 0 }}>
             <div className="block-head">
-              <p className="label">Why</p>
+              <h2 className="label">Why</h2>
             </div>
             <div className="block-body">
               <p className="lede" style={{ color: "var(--ink)" }}>
@@ -39,7 +49,7 @@ export default function Company() {
 
           <div className="block">
             <div className="block-head">
-              <p className="label">At a glance</p>
+              <h2 className="label">At a glance</h2>
             </div>
             <div className="block-body">
               <dl className="spec">
@@ -92,7 +102,10 @@ export default function Company() {
           <div className="contact-side">
             <p className="body">For research collaboration, early deployments, or questions about the work.</p>
             <a className="btn btn-solid" href={mailto}>
-              {SITE.email} <span className="arrow">→</span>
+              {SITE.email}{" "}
+              <span className="arrow" aria-hidden="true">
+                →
+              </span>
             </a>
           </div>
         </div>

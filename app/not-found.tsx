@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
@@ -10,7 +13,10 @@ export default function NotFound() {
         <h1 className="h1">Nothing has grown here yet.</h1>
         <div className="btn-row" style={{ marginTop: "var(--s-7)" }}>
           <Link className="btn btn-solid" href="/">
-            Back to home <span className="arrow">→</span>
+            Back to home{" "}
+            <span className="arrow" aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
       </div>
