@@ -574,7 +574,12 @@ svg {
 
 .points .h3 {
   margin-top: var(--s-4);
-  max-width: 14em;
+}
+
+@media (min-width: 901px) {
+  .points .h3 {
+    max-width: 14em;
+  }
 }
 
 .points .body {
