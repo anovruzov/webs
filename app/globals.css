@@ -245,7 +245,9 @@ svg {
   letter-spacing: -0.005em;
   border: 1px solid var(--ink);
   border-radius: 0;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+  transition:
+    background-color 0.25s var(--ease),
+    color 0.25s var(--ease);
   white-space: nowrap;
 }
 
@@ -363,7 +365,9 @@ svg {
   color: var(--ink);
   border: 1px solid var(--ink);
   padding: 7px 14px;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .nav .nav-cta:hover {
@@ -380,6 +384,18 @@ svg {
   }
   .nav a {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header .wordmark {
+    font-size: 16px;
+  }
+  .nav {
+    gap: 14px;
+  }
+  .nav a {
+    font-size: 13.5px;
   }
 }
 
@@ -416,10 +432,31 @@ svg {
   position: relative;
 }
 
-.hero-art .art-desktop,
-.hero-art .art-mobile {
+.hero-art svg {
   width: 100%;
   height: auto;
+  max-height: calc(100svh - var(--header) - 72px);
+  overflow: visible;
+}
+
+.hero-art svg text {
+  font-family: var(--mono);
+}
+
+/* the drawing scales down between 761px and 1280px; keep its annotations near 11px on screen */
+@media (max-width: 1280px) and (min-width: 761px) {
+  .hero-art .mf text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  .hero-art .mf text {
+    font-size: 15.5px;
+  }
+  .hero-text .btn-row .btn {
+    flex: 1 1 auto;
+  }
 }
 
 .hero-art .art-mobile {
@@ -699,13 +736,13 @@ svg {
 }
 
 /* draw-on-reveal for figure strokes */
-.draw {
+.js .draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   transition: stroke-dashoffset 1.6s var(--ease);
 }
 
-.in-view .draw {
+.js .in-view .draw {
   stroke-dashoffset: 0;
 }
 
@@ -1498,13 +1535,15 @@ svg {
 
 /* reveal */
 
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
 }
 
-.reveal.in-view {
+.js .reveal.in-view {
   opacity: 1;
   transform: none;
 }
@@ -1527,11 +1566,11 @@ svg {
     animation: none !important;
     transition: none !important;
   }
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
   }
-  .draw {
+  .js .draw {
     stroke-dashoffset: 0;
   }
 }

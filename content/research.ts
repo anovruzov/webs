@@ -28,9 +28,15 @@ export const memory = {
   ] as Metric[],
   fast: { value: "0.44 s", label: "End-to-end, without the reranker", scope: "All 1,540 questions · 61.9% accuracy" },
   sources: [
-    { label: "research/results/local_pairs_single_hop.json", href: blob("research/results/local_pairs_single_hop.json") },
+    {
+      label: "research/results/local_pairs_single_hop.json",
+      href: blob("research/results/local_pairs_single_hop.json"),
+    },
     { label: "research/results/flat_single_hop.json", href: blob("research/results/flat_single_hop.json") },
-    { label: "research/results/capstone_full.json + capstone_rest.json", href: blob("research/results/capstone_full.json") },
+    {
+      label: "research/results/capstone_full.json + capstone_rest.json",
+      href: blob("research/results/capstone_full.json"),
+    },
     { label: "docs/BENCHMARKS.md", href: blob("docs/BENCHMARKS.md") },
     {
       label: "Fast path: docs/research/RESULTS_ALL.md (branch research/retrieval-campaign-2026-09)",
@@ -54,7 +60,11 @@ export const lineage = {
     label: "Independent support that survives a 50% attack",
     scope: "Lineage-aware vs random · 95% CI [.046, .047]",
   },
-  questioning: { value: ".451 → .594", label: "Task accuracy with questioning", scope: "Same placement · 8.0 → 14.5 messages per claim" },
+  questioning: {
+    value: ".451 → .594",
+    label: "Task accuracy with questioning",
+    scope: "Same placement · 8.0 → 14.5 messages per claim",
+  },
   sources: [
     {
       label: "experiments/large_scale_agentic_web/RESULTS.md (branch claude/agentic-web-stress-test-2czsv3)",
@@ -66,7 +76,11 @@ export const lineage = {
 export const emergence = {
   question:
     "Can thousands of private agents combine partial evidence into discoveries that no single agent has enough evidence to make, and learn what to ask next?",
-  headline: { value: "57.0%", label: "Hidden patterns found, up from 39.5%", scope: "10,000 agents · held-out seeds 5–9 · 5 of 5 improve" },
+  headline: {
+    value: "57.0%",
+    label: "Hidden patterns found, up from 39.5%",
+    scope: "10,000 agents · held-out seeds 5–9 · 5 of 5 improve",
+  },
   ci: "+17.5 points · 95% CI [+12.5, +21.0]",
   bars10k: [
     { label: "Found rate", before: 39.5, after: 57.0 },
@@ -88,9 +102,17 @@ export const emergence = {
     { name: "Lean hierarchy", x: 2.68, y: 50.2 },
     { name: "Central triage", x: 1.07, y: 31.4 },
   ],
-  scale: { value: "56.6%", label: "Found at 50,000 agents", scope: "3.86M vs 10.2M modeled compute units for central context" },
+  scale: {
+    value: "56.6%",
+    label: "Found at 50,000 agents",
+    scope: "3.86M vs 10.2M modeled compute units for central context",
+  },
   oracle: { value: "42.4%", label: "Found with 100% retrieval coverage", scope: "Oracle retrieval · 50,000 agents" },
-  decoy: { value: "36.0% → 74.4%", label: "Stale-chain decoys accepted", scope: "50,000 agents · a regression, reported as one" },
+  decoy: {
+    value: "36.0% → 74.4%",
+    label: "Stale-chain decoys accepted",
+    scope: "50,000 agents · a regression, reported as one",
+  },
   sources: [
     { label: "docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md", href: blob("docs/mycelic_vnext/NEXT_RESEARCH_REPORT.md") },
     { label: "docs/mycelic_vnext/ALL.md", href: blob("docs/mycelic_vnext/ALL.md") },

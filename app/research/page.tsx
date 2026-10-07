@@ -86,7 +86,12 @@ function ScatterSvg({ W, anchors, className }: { W: number; anchors: Record<stri
   const x = (v: number) => pad.l + (v / 11) * (W - pad.l - pad.r);
   const y = (v: number) => H - pad.b - ((v - 20) / 70) * (H - pad.t - pad.b);
   return (
-    <svg className={className} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Found rate versus modeled compute at 50,000 agents">
+    <svg
+      className={className}
+      viewBox={`0 0 ${W} ${H}`}
+      role="img"
+      aria-label="Found rate versus modeled compute at 50,000 agents"
+    >
       {[30, 50, 70].map((v) => (
         <g key={v}>
           <line className="sc-grid" x1={pad.l} x2={W - pad.r} y1={y(v)} y2={y(v)} />
@@ -191,8 +196,8 @@ export default function Research() {
             <div className="main">
               <p className="label">Finding</p>
               <p className="finding" style={{ marginTop: "var(--s-3)" }}>
-                Routing memory to the participant it belongs to, and keeping both sides of a conversation linked, did more
-                for long-horizon recall than retrieving harder from one flat store.
+                Routing memory to the participant it belongs to, and keeping both sides of a conversation linked, did
+                more for long-horizon recall than retrieving harder from one flat store.
               </p>
               <p className="body" style={{ marginTop: "var(--s-5)" }}>
                 Tested on LoCoMo, a benchmark of very long multi-session conversations. The comparison changes only
@@ -226,9 +231,15 @@ export default function Research() {
                 Scope
               </p>
               <ul className="limits">
-                <li>Answering, reranking, and judging run on a small local model (gemma-4-e4b) with a lenient judge.</li>
-                <li>The 744-question slice covers conversations 1–5. A broader run over conversations 1–8 scores 68.6%.</li>
-                <li>The 0.44 s fast path drops the LLM reranker and costs about 6.5 points against the reranked stack.</li>
+                <li>
+                  Answering, reranking, and judging run on a small local model (gemma-4-e4b) with a lenient judge.
+                </li>
+                <li>
+                  The 744-question slice covers conversations 1–5. A broader run over conversations 1–8 scores 68.6%.
+                </li>
+                <li>
+                  The 0.44 s fast path drops the LLM reranker and costs about 6.5 points against the reranked stack.
+                </li>
                 <li>The harness’s single-hop category averages three evidence messages per question.</li>
               </ul>
               <Sources items={memory.sources} />
@@ -329,9 +340,9 @@ export default function Research() {
             <div className="main">
               <p className="label">Setup</p>
               <p className="body" style={{ marginTop: "var(--s-3)" }}>
-                Synthetic enterprise worlds hide patterns in fragments spread across users, sites, regions, and time, with
-                adversarial decoys and a bounded output register. Raw text never moves up. The kernel finds gaps in its
-                hypotheses, sends targeted questions down the hierarchy, merges the answers, and repeats.
+                Synthetic enterprise worlds hide patterns in fragments spread across users, sites, regions, and time,
+                with adversarial decoys and a bounded output register. Raw text never moves up. The kernel finds gaps in
+                its hypotheses, sends targeted questions down the hierarchy, merges the answers, and repeats.
               </p>
               <p className="label" style={{ marginTop: "var(--s-7)" }}>
                 Finding
@@ -403,8 +414,12 @@ export default function Research() {
               </p>
               <MetricView m={emergence.decoy} small />
               <ul className="limits" style={{ marginTop: "var(--s-6)" }}>
-                <li>Centralized long context still finds more: 78.4% against 56.6% at 50K, at 2.6× the modeled compute.</li>
-                <li>The kernel’s global read exceeds the modeled 1M-token tier. A production claim needs it chunked.</li>
+                <li>
+                  Centralized long context still finds more: 78.4% against 56.6% at 50K, at 2.6× the modeled compute.
+                </li>
+                <li>
+                  The kernel’s global read exceeds the modeled 1M-token tier. A production claim needs it chunked.
+                </li>
                 <li>Simulator study. Compute is modeled, not measured. Live-model validation is next.</li>
                 <li>The 50K suite reuses development seeds. The 10K held-out panel is the clean result.</li>
               </ul>
@@ -412,7 +427,13 @@ export default function Research() {
             </div>
           </div>
 
-          <div style={{ marginTop: "clamp(64px, 8vw, 112px)", borderTop: "1px solid var(--line)", paddingTop: "var(--s-5)" }}>
+          <div
+            style={{
+              marginTop: "clamp(64px, 8vw, 112px)",
+              borderTop: "1px solid var(--line)",
+              paddingTop: "var(--s-5)",
+            }}
+          >
             <p className="label">Paper</p>
             <p className="h3" style={{ marginTop: "var(--s-3)", maxWidth: "28em" }}>
               Targeted Evidence Acquisition for Discovery in Hierarchical Agent Memory

@@ -68,9 +68,9 @@ export default function Home() {
           </div>
           <figure className="hero-art">
             <HeroArt />
-            <figcaption className="hero-caption">
-              <span className="note">Fig. 01 — Three local structures, one form between them.</span>
-              <span className="note">A · B · C</span>
+            <figcaption className="sr-only">
+              Fig. 01: three local colonies, each growing in its own way, send a few hyphae into one shared ring that
+              none of them forms alone.
             </figcaption>
           </figure>
         </div>
@@ -92,7 +92,12 @@ export default function Home() {
                 <p className="body">{p.b}</p>
                 {p.note && (
                   <p className="note">
-                    <a href={emergence.sources[0].href} target="_blank" rel="noreferrer" style={{ borderBottom: "1px solid var(--line)" }}>
+                    <a
+                      href={emergence.sources[0].href}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ borderBottom: "1px solid var(--line)" }}
+                    >
                       {p.note} ↗
                     </a>
                   </p>
@@ -129,7 +134,9 @@ export default function Home() {
               <span className="idx">03</span> Applications
             </span>
             <h2 className="h2">Where the answer is split across the organization.</h2>
-            <p className="body">Three scenarios that show the primitive. Each one is a pattern no single team could confirm alone.</p>
+            <p className="body">
+              Three scenarios that show the primitive. Each one is a pattern no single team could confirm alone.
+            </p>
           </Reveal>
           <ol className="apps">
             {APPS.map((a, i) => (

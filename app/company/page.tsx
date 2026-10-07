@@ -20,24 +20,24 @@ export default function Company() {
       </section>
 
       <section className="section" style={{ borderTop: "1px solid var(--line)" }}>
-        <div className="wrap block" style={{ borderTop: 0, padding: 0 }}>
-          <div className="block-head">
-            <p className="label">Why</p>
-          </div>
-          <div className="block-body">
-            <p className="lede" style={{ color: "var(--ink)" }}>
-              Companies are becoming networks of people, models, agents, software, and machines. No single model will
-              understand everything happening inside them.
-            </p>
-            <p className="lede" style={{ marginTop: "var(--s-5)" }}>
-              Mycelic is building the infrastructure that lets knowledge emerge across that system, be verified at its
-              source, and return to the network so the organization can learn from it.
-            </p>
-          </div>
-        </div>
-
         <div className="wrap">
-          <div className="block" style={{ marginTop: "var(--section)" }}>
+          <div className="block" style={{ borderTop: 0, paddingTop: 0 }}>
+            <div className="block-head">
+              <p className="label">Why</p>
+            </div>
+            <div className="block-body">
+              <p className="lede" style={{ color: "var(--ink)" }}>
+                Companies are becoming networks of people, models, agents, software, and machines. No single model will
+                understand everything happening inside them.
+              </p>
+              <p className="lede" style={{ marginTop: "var(--s-5)" }}>
+                Mycelic is building the infrastructure that lets knowledge emerge across that system, be verified at its
+                source, and return to the network so the organization can learn from it.
+              </p>
+            </div>
+          </div>
+
+          <div className="block">
             <div className="block-head">
               <p className="label">At a glance</p>
             </div>
@@ -67,7 +67,13 @@ export default function Company() {
                 <div>
                   <dt>Code</dt>
                   <dd>
-                    <a href={SITE.github} target="_blank" rel="noreferrer" className="link" style={{ fontSize: "inherit" }}>
+                    <a
+                      href={SITE.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="link"
+                      style={{ fontSize: "inherit" }}
+                    >
                       NeuralGraph ↗
                     </a>
                   </dd>

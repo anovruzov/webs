@@ -53,12 +53,36 @@ const PRINCIPLES = [
 ];
 
 const FLOW = [
-  { t: "Local evidence holders", d: "Raw records and source-root identifiers. They never leave on the upward path.", dir: "up" },
-  { t: "Hierarchical abstraction", d: "Team, department, site, region. Claims, roots, and validity intervals move up.", dir: "up" },
-  { t: "Enterprise kernel", d: "Temporal synthesis, learned ranking, and a bounded top-K register of hypotheses.", dir: "up" },
-  { t: "Question artifact", d: "Entity, missing predicates, estimated gain, estimated cost, routing hint.", dir: "down" },
-  { t: "Targeted descent", d: "Branch indices route the request to likely holders, who answer from an authorized local read.", dir: "down" },
-  { t: "Structured answer", d: "Claims with witness roots and timing merge into the pool, and the register is revised.", dir: "down" },
+  {
+    t: "Local evidence holders",
+    d: "Raw records and source-root identifiers. They never leave on the upward path.",
+    dir: "up",
+  },
+  {
+    t: "Hierarchical abstraction",
+    d: "Team, department, site, region. Claims, roots, and validity intervals move up.",
+    dir: "up",
+  },
+  {
+    t: "Enterprise kernel",
+    d: "Temporal synthesis, learned ranking, and a bounded top-K register of hypotheses.",
+    dir: "up",
+  },
+  {
+    t: "Question artifact",
+    d: "Entity, missing predicates, estimated gain, estimated cost, routing hint.",
+    dir: "down",
+  },
+  {
+    t: "Targeted descent",
+    d: "Branch indices route the request to likely holders, who answer from an authorized local read.",
+    dir: "down",
+  },
+  {
+    t: "Structured answer",
+    d: "Claims with witness roots and timing merge into the pool, and the register is revised.",
+    dir: "down",
+  },
 ];
 
 export default function Technology() {
@@ -71,8 +95,8 @@ export default function Technology() {
           </p>
           <h1 className="h1">Discovery without centralization.</h1>
           <p className="lede">
-            Mycelic finds patterns that span an organization while each part of it keeps its own data. This page explains
-            the system from the idea down to what is implemented today.
+            Mycelic finds patterns that span an organization while each part of it keeps its own data. This page
+            explains the system from the idea down to what is implemented today.
           </p>
         </div>
       </section>
@@ -160,15 +184,15 @@ export default function Technology() {
               </p>
               <div className="formula">c = (e, p, y, [t₀, t₁], S, B)</div>
               <p className="body">
-                Independent support is the largest set of witnesses whose source roots do not overlap. Adding copies of an
-                existing witness cannot raise it. That is a bookkeeping guarantee under correct lineage, not a claim that
-                provenance establishes truth.
+                Independent support is the largest set of witnesses whose source roots do not overlap. Adding copies of
+                an existing witness cannot raise it. That is a bookkeeping guarantee under correct lineage, not a claim
+                that provenance establishes truth.
               </p>
               <div className="formula">n⊥(c) = max |U| over U ⊆ W(c), such that R(u) ∩ R(v) = ∅ for all u ≠ v</div>
               <p className="body">
                 Requests are ranked by estimated gain per cost. A class-weighted ranker scores candidate chains on 45
-                kernel-side features, including source support, lineage dispersion, lag, and evidence shape. No raw text is
-                used.
+                kernel-side features, including source support, lineage dispersion, lag, and evidence shape. No raw text
+                is used.
               </p>
             </div>
           </div>
@@ -237,8 +261,8 @@ export default function Technology() {
                 <div>
                   <dt>Pair routing</dt>
                   <dd>
-                    A query goes to the memory of the participant who said it, then back-fills from the other side of the
-                    conversation. Per-participant routing alone moved recall@10 from 39.4 to 46.8 on LoCoMo.
+                    A query goes to the memory of the participant who said it, then back-fills from the other side of
+                    the conversation. Per-participant routing alone moved recall@10 from 39.4 to 46.8 on LoCoMo.
                   </dd>
                 </div>
               </dl>
@@ -251,14 +275,19 @@ export default function Technology() {
             </div>
             <div className="block-body">
               <p className="body body-ink">
-                The runtime and local memory are implemented. The acquisition loop is evaluated in simulation at 10,000 and
-                50,000 agents. Validation with live models on real records is the next milestone.
+                The runtime and local memory are implemented. The acquisition loop is evaluated in simulation at 10,000
+                and 50,000 agents. Validation with live models on real records is the next milestone.
               </p>
               <div className="btn-row" style={{ marginTop: "var(--s-6)" }}>
                 <Link className="btn btn-solid" href="/research">
                   Research results <span className="arrow">→</span>
                 </Link>
-                <a className="btn btn-line" href="https://github.com/anovruzov/NeuralGraph" target="_blank" rel="noreferrer">
+                <a
+                  className="btn btn-line"
+                  href="https://github.com/anovruzov/NeuralGraph"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Source on GitHub <span className="arrow">↗</span>
                 </a>
               </div>
